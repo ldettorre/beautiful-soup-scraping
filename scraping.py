@@ -1,4 +1,4 @@
-from bs4 import beautifulsoup
+from bs4 import BeautifulSoup
 
 html_doc = """
 <!DOCTYPE html>
@@ -29,3 +29,25 @@ html_doc = """
 </body>
 </html>
 """
+
+#Below initialises BeautifulSoup. 
+soup = BeautifulSoup(html_doc, "html.parser")
+
+#Below specifies the body element in the html_doc variable. We can also specify other elements such as head.
+# print(soup.body)
+
+
+#The find method returns only the first instance of the specified element. 
+find_element = soup.find("div")
+
+#find_all() or findAll() will find every instance of that element and return it in a list.
+find_all_divs = soup.find_all("div")
+
+#We can use indexes to be more specific with our search
+find_by_index = soup.find_all("div")[1]
+
+#Pass id="" or class_="" into the find method to search by the chosen selector.
+find_by_id = soup.find(id="section-1")
+find_by_class = soup.find(class_ = "items")
+
+print(find_by_id, find_by_class)
