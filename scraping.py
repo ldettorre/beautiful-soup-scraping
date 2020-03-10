@@ -25,29 +25,37 @@ html_doc = """
             <li class="item"><a href="#">Item 5</a></li>
         </ul>
     </div>
-    
+
 </body>
 </html>
 """
 
-#Below initialises BeautifulSoup. 
+# Below initialises BeautifulSoup.
 soup = BeautifulSoup(html_doc, "html.parser")
 
-#Below specifies the body element in the html_doc variable. We can also specify other elements such as head.
+# Below selects the body element in the html_doc variable. We can also select other elements such as head.
 # print(soup.body)
 
-
-#The find method returns only the first instance of the specified element. 
+# The find method returns only the first instance of the selected element.
 find_element = soup.find("div")
 
-#find_all() or findAll() will find every instance of that element and return it in a list.
+# find_all() or findAll() will find every instance of that element and return it in a list.
 find_all_divs = soup.find_all("div")
 
-#We can use indexes to be more specific with our search
+# We can use indexes to be more specific with our search
 find_by_index = soup.find_all("div")[1]
 
-#Pass id="" or class_="" into the find method to search by the chosen selector.
+# Pass id="" or class_="" into the find method to search by the chosen selector.
 find_by_id = soup.find(id="section-1")
-find_by_class = soup.find(class_ = "items")
+find_by_class = soup.find(class_="items")
 
-print(find_by_id, find_by_class)
+# Below is how to select attributes values with a json object.
+find_attr = soup.find(attrs={"data-hello": "hi"})
+
+# The select method allows us to select by css selectors. Select always returns a list.
+select_this_id = soup.select("#section-1")
+
+# If we specify by index, we won't be returned a list
+select_this_class = soup.select(".item")[2]
+
+print(select_this_class)
