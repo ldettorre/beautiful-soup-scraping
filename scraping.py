@@ -58,4 +58,26 @@ select_this_id = soup.select("#section-1")
 # If we specify by index, we won't be returned a list
 select_this_class = soup.select(".item")[2]
 
-print(select_this_class)
+# To get the data within selected tags we use get text. First we find() then we get_text().
+get_text = soup.find(class_="item").get_text()
+
+# For loops can be used to iterate over numerous uses of a selector. Then get_text() can be used to get that iterations text
+# for item in soup.select(".item"):
+    # print(item.get_text())
+
+# When navigating through the data, /n new lines are seen as items in the list thats returned so below renders the following:
+# contents = soup.body.contents
+# contents_index1 = soup.body.contents[1]
+# contents_index2 = soup.body.contents[2]
+# contents_index3 = soup.body.contents[3]
+# contents_index4 = soup.body.contents[4]
+# contents_index5 = soup.body.contents[5]
+
+# Below selects the first section > first element in the section then the next sibling not incl. the /n new line.
+contents_index = soup.body.contents[1].contents[1].find_next_sibling()
+
+# Finding previous sibling works in a similar fashion.
+prev_sibling = soup.find(id="section-2").find_previous_sibling()
+
+find_parent = soup.find(id="section-1").find_parents()
+
