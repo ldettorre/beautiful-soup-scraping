@@ -5,7 +5,7 @@ from csv import writer
 
 # Important note: If registration does not exist, code will break and throw this error "IndexError: list index out of range"
 for i in range(5):
-    response = requests.get("https://www.cartell.ie/ssl/servlet/beginStarLookup?registration=07D2136"+str(i))
+    response = requests.get("https://www.cartell.ie/ssl/servlet/beginStarLookup?registration=181C"+str(i))
     soup = BeautifulSoup(response.text, "html.parser")
     
     file_exists = os.path.isfile("car_data.csv")
@@ -15,20 +15,19 @@ for i in range(5):
         if not file_exists:
             csv_writer.writerow(headers)
 
-        registration = soup.select("td")[0].get_text()
-        make = soup.select("td")[1].get_text()
-        model = soup.select("td")[2].get_text()
-        desc = soup.select("td")[3].get_text()
-        engine_cc = soup.select("td")[4].get_text()
-        csv_writer.writerow([registration, make, model, desc, engine_cc])
+        
+        try:
+            registration = soup.select("td")[0].get_text()
+            make = soup.select("td")[1].get_text()
+            model = soup.select("td")[2].get_text()
+            desc = soup.select("td")[3].get_text()
+            engine_cc = soup.select("td")[4].get_text()
+            csv_writer.writerow([registration, make, model, desc, engine_cc])
+        except IndexError:
+            registration = "N/A"
+            make = "N/A"
+            model = "N/A"
+            desc = "N/A"
+            engine_cc = "N/A"
+            csv_writer.writerow([registration, make, model, desc, engine_cc])
 
-
-# The function below takes a url address as a string and limit as an integer.
-# The loop will run upto the set limit -1 as it's a range. 
-# Each iteration will print the url with that iterations number concatenated to the end.
-
-# def incrmenting_url(url, limit):
-#     for i in range(limit):
-#         print(url + str(i))
-
-# incrmenting_url("https://www.cartell.ie/ssl/servlet/beginStarLookup?registration=191D",5)
