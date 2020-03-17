@@ -2,14 +2,18 @@ import requests, os
 from bs4 import BeautifulSoup
 from csv import writer
 
-for i in range(5):
-    response = requests.get("https://www.cartell.ie/ssl/servlet/beginStarLookup?registration=192D100"+str(i))
-    soup = BeautifulSoup(response.text, "html.parser")
 
+# Important note: If registration does not exist, code will break and throw this error "IndexError: list index out of range"
+for i in range(5):
+    response = requests.get("https://www.cartell.ie/ssl/servlet/beginStarLookup?registration=07D2136"+str(i))
+    soup = BeautifulSoup(response.text, "html.parser")
+    
+    file_exists = os.path.isfile("car_data.csv")
     with open("car_data.csv", "a") as csv_file:
         csv_writer = writer(csv_file)
         headers = ["Registration","Make","Model","Description","Engine Capacity"]
-        csv_writer.writerow(headers)
+        if not file_exists:
+            csv_writer.writerow(headers)
 
         registration = soup.select("td")[0].get_text()
         make = soup.select("td")[1].get_text()
