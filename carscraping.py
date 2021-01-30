@@ -4,8 +4,8 @@ from csv import writer
 
 
 # Important note: If registration does not exist, code will break and throw this error "IndexError: list index out of range"
-for i in range(100):
-    response = requests.get("https://www.cartell.ie/ssl/servlet/beginStarLookup?registration=181D1"+str(i))
+def get_car_details(reg):
+    response = requests.get("https://www.cartell.ie/ssl/servlet/beginStarLookup?registration="+reg)
     soup = BeautifulSoup(response.text, "html.parser")
     
     file_exists = os.path.isfile("car_data.csv")
@@ -30,4 +30,6 @@ for i in range(100):
             desc = "N/A"
             engine_cc = "N/A"
             csv_writer.writerow([registration, make, model, desc, engine_cc])
+        print(registration, make, model, desc, engine_cc)
 
+get_car_details(Enter Reg Here)
